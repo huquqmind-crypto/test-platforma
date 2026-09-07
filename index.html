@@ -3,20 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@huququstoz | DTM Elektron Test Platformasi</title>
-    <!-- Tailwind CSS CDN for styling foundation -->
+    <title>@huququstoz | Premium DTM Imtihon Platformasi</title>
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
                     colors: {
                         brand: {
-                            50: '#eff6ff',
-                            500: '#3b82f6',
-                            600: '#2563eb',
-                            700: '#1d4ed8'
+                            50: '#f0f6ff',
+                            100: '#e0effe',
+                            500: '#2563eb',
+                            600: '#1d4ed8',
+                            700: '#1e40af',
                         }
                     }
                 }
@@ -24,154 +30,179 @@
         }
     </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
-        @keyframes pulse-red {
+        /* Custom smooth glassmorphism & shadows */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+            border-radius: 16px;
+        }
+        .dark .glass-card {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(51, 65, 85, 0.8);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 15px rgba(234, 179, 8, 0.5); }
+            50% { box-shadow: 0 0 25px rgba(234, 179, 8, 0.9); }
+        }
+        .golden-glow {
+            animation: pulse-glow 2s infinite;
+        }
+        @keyframes timer-pulse {
             0%, 100% { background-color: #ef4444; color: white; }
             50% { background-color: #fee2e2; color: #991b1b; }
         }
-        .timer-blink {
-            animation: pulse-red 1s infinite;
+        .timer-alert {
+            animation: timer-pulse 1s infinite;
         }
-        /* Custom scrollbar for better UX */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 4px;
-        }
-        .dark ::-webkit-scrollbar-thumb {
-            background: #475569;
-        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .dark ::-webkit-scrollbar-thumb { background: #334155; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 min-h-screen transition-colors duration-300">
+<body class="bg-slate-50 text-slate-800 dark:bg-[#0f172a] dark:text-slate-100 min-h-screen transition-colors duration-300">
 
-    <!-- HEADER -->
-    <header class="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-700 px-4 py-3 shadow-sm">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="flex items-center space-x-3">
-                <div class="bg-brand-600 text-white font-bold p-2 rounded-xl shadow-md text-sm md:text-base">
-                    ⚖️ @huququstoz
+    <!-- PRE-AUTH SCREEN (RO'YXATDAN O'TISH) -->
+    <div id="authScreen" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-md">
+        <div class="glass-card max-w-md w-full p-8 space-y-6 text-center shadow-2xl animate-in fade-in zoom-in duration-300">
+            <div class="w-16 h-16 bg-brand-600 text-white rounded-2xl flex items-center justify-center mx-auto text-2xl shadow-lg shadow-brand-500/30">
+                ⚖️
+            </div>
+            <div>
+                <h2 class="text-2xl font-extrabold tracking-tight">@huququstoz</h2>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Professional DTM Elektron Imtihon Tizimi</p>
+            </div>
+            <form id="authForm" onsubmit="startExam(event)" class="space-y-4 text-left">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Ism va Familiya</label>
+                    <input type="text" id="authName" placeholder="Masalan: Azizbek Olimov" required class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-800/50 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm transition-all">
                 </div>
                 <div>
-                    <h1 class="font-bold text-sm md:text-lg leading-tight">Huquqiy Imtihon Platformasi</h1>
-                    <p class="text-xs text-slate-500 dark:path-slate-400">DTM va Ochiq savollar bloki</p>
+                    <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Telefon raqam</label>
+                    <input type="tel" id="authPhone" placeholder="+998 90 123 45 67" required class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-800/50 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm transition-all">
                 </div>
-            </div>
-            <!-- Dark Mode Toggle -->
-            <button id="themeToggle" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors" title="Rejimni o'zgartirish">
-                <svg id="sunIcon" class="w-5 h-5 hidden dark:block text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                <svg id="moonIcon" class="w-5 h-5 block dark:hidden text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-            </button>
+                <button type="submit" class="w-full py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl shadow-lg shadow-brand-500/25 transition-all duration-300 transform hover:-translate-y-0.5 text-sm flex items-center justify-center space-x-2">
+                    <span>Imtihonni boshlash</span>
+                    <span>🚀</span>
+                </button>
+            </form>
         </div>
-    </header>
+    </div>
 
-    <!-- MAIN CONTAINER (Desktop: Two-column, Mobile: Stacked) -->
-    <main class="max-w-7xl mx-auto px-4 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6 mb-32 lg:mb-12">
+    <!-- MAIN EXAM ENVIRONMENT (BOSHLANGICHDA YASHIRIN) -->
+    <div id="examEnvironment" class="hidden">
         
-        <!-- LEFT COLUMN: Registration & Questions (Span 8) -->
-        <div class="lg:col-span-8 space-y-6" id="examContainer">
+        <!-- HEADER -->
+        <header class="sticky top-0 z-40 backdrop-blur-md bg-white/80 dark:bg-[#0f172a]/80 border-b border-slate-200 dark:border-slate-800 px-4 py-3">
+            <div class="max-w-7xl mx-auto flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-brand-600 text-white font-bold px-3 py-1.5 rounded-xl shadow-md text-xs md:text-sm">
+                        ⚖️ @huququstoz
+                    </div>
+                    <div>
+                        <h1 class="font-bold text-xs md:text-sm leading-tight">Yuridik Test Platformasi</h1>
+                        <p class="text-[10px] text-slate-500 dark:text-slate-400">Abituriyent: <span id="displayUser" class="font-semibold text-brand-600 dark:text-brand-400"></span></p>
+                    </div>
+                </div>
+                <!-- Dark Mode Toggle -->
+                <button onclick="toggleDarkMode()" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" title="Rejimni o'zgartirish">
+                    <svg id="sunIcon" class="w-5 h-5 hidden dark:block text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <svg id="moonIcon" class="w-5 h-5 block dark:hidden text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- CONTAINER GRID -->
+        <main class="max-w-7xl mx-auto px-4 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6 mb-36 lg:mb-12">
             
-            <!-- Abituriyent ma'lumotlari -->
-            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
-                <h2 class="text-base font-semibold mb-4 flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-brand-600"></span> Abituriyent ma'lumotlarini kiriting
-                </h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                    <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Ism va Familiya</label>
-                        <input type="text" id="fullName" placeholder="Masalan: Alisher Navoiy" required class="w-full px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-transparent focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Telefon raqam</label>
-                        <input type="tel" id="phoneNumber" placeholder="+998 90 123 45 67" required class="w-full px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-transparent focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
-                    </div>
-                </div>
-            </div>
-
-            <!-- DTM Yopiq Testlar Bo'limi -->
-            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
-                <div class="border-b border-slate-200 dark:border-slate-700 pb-3 mb-4 flex justify-between items-center">
-                    <h2 class="font-bold text-lg text-brand-600 dark:text-brand-400">I-BO‘LIM: Yopiq testlar (30 ta)</h2>
-                    <span class="text-xs bg-brand-50 dark:bg-slate-700 text-brand-600 dark:text-brand-300 px-2.5 py-1 rounded-lg font-medium">Har biri 1 baldan</span>
-                </div>
-                <!-- Dinamik yopiq savollar joyi -->
-                <div id="closedQuestionsContainer" class="space-y-6"></div>
-            </div>
-
-            <!-- Ochiq Savollar Bo'limi -->
-            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700">
-                <div class="border-b border-slate-200 dark:border-slate-700 pb-3 mb-4 flex justify-between items-center">
-                    <h2 class="font-bold text-lg text-brand-600 dark:text-brand-400">II-BO‘LIM: Ochiq savollar (20 ta)</h2>
-                    <span class="text-xs bg-amber-50 dark:bg-slate-700 text-amber-600 dark:text-amber-300 px-2.5 py-1 rounded-lg font-medium">Matnli javob</span>
-                </div>
-                <!-- Dinamik ochiq savollar joyi -->
-                <div id="openQuestionsContainer" class="space-y-6"></div>
-            </div>
-
-            <!-- Submit Button -->
-            <button id="submitExamBtn" onclick="submitExam()" class="w-full py-4 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-2xl shadow-lg shadow-brand-500/20 transition-all duration-200 active:scale-[0.99] text-base">
-                Testni yakunlash va natijani yuborish 🚀
-            </button>
-        </div>
-
-        <!-- RIGHT COLUMN (Desktop Sticky / Mobile Fixed Bottom): Timer & Titul (Span 4) -->
-        <div class="lg:col-span-4">
-            <div id="sidebarPanel" class="fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-slate-800/95 backdrop-blur-md lg:relative lg:bottom-auto lg:bg-white lg:dark:bg-slate-800 p-4 lg:p-6 lg:rounded-2xl shadow-xl lg:shadow-sm border-t lg:border border-slate-200 dark:border-slate-700 lg:sticky lg:top-20 space-y-4">
+            <!-- LEFT COLUMN: Questions (Span 8) -->
+            <div class="lg:col-span-8 space-y-6" id="questionsWrapper">
                 
-                <!-- Taymer Bloki -->
-                <div class="flex items-center justify-between bg-slate-100 dark:bg-slate-700/50 p-3.5 rounded-xl border border-slate-200 dark:border-slate-600">
-                    <div class="flex items-center space-x-2">
-                        <svg class="w-5 h-5 text-brand-600 dark:text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Qolgan vaqt:</span>
+                <!-- Closed Tests Section -->
+                <div class="glass-card p-6 space-y-6">
+                    <div class="border-b border-slate-200 dark:border-slate-800 pb-3 flex justify-between items-center">
+                        <h2 class="font-bold text-base text-brand-600 dark:text-brand-400">I-BO‘LIM: Yopiq testlar (30 ta)</h2>
+                        <span class="text-xs bg-brand-50 dark:bg-slate-800 text-brand-600 dark:text-brand-300 px-3 py-1 rounded-full font-semibold">DTM Standarti</span>
                     </div>
-                    <div id="timerDisplay" class="text-lg font-mono font-bold text-slate-800 dark:text-white px-3 py-1 rounded-lg bg-white dark:bg-slate-800 shadow-sm">
-                        90:00
-                    </div>
+                    <div id="closedQuestionsContainer" class="space-y-6"></div>
                 </div>
 
-                <!-- Elektron Titul (DTM Katakchalari) -->
-                <div>
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Elektron Titul (Yopiq testlar)</span>
-                        <span id="answeredCount" class="text-xs font-semibold text-brand-600 dark:text-brand-400">0 / 30</span>
+                <!-- Open Questions Section -->
+                <div class="glass-card p-6 space-y-6">
+                    <div class="border-b border-slate-200 dark:border-slate-800 pb-3 flex justify-between items-center">
+                        <h2 class="font-bold text-base text-brand-600 dark:text-brand-400">II-BO‘LIM: Ochiq savollar (20 ta)</h2>
+                        <span class="text-xs bg-amber-50 dark:bg-slate-800 text-amber-600 dark:text-amber-300 px-3 py-1 rounded-full font-semibold">Matnli yechim</span>
                     </div>
-                    <!-- 10x3 grid for mobile requirement (10 tadan ustun tartibda) -->
-                    <div id="dtmGrid" class="grid grid-cols-10 lg:grid-cols-6 gap-1.5 max-h-48 lg:max-h-72 overflow-y-auto p-1 border border-slate-100 dark:border-slate-700 rounded-xl">
-                        <!-- JS orqali to'ldiriladi -->
-                    </div>
+                    <div id="openQuestionsContainer" class="space-y-6"></div>
                 </div>
 
-                <!-- Desktop yuborish tugmasi (faqat kompyuter uchun qulaylik uchun) -->
-                <div class="hidden lg:block pt-2">
-                    <button onclick="submitExam()" class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl shadow-md transition-colors text-sm">
-                        Testni yakunlash
-                    </button>
+                <!-- Submit Button Desktop -->
+                <button onclick="submitExam()" class="w-full py-4 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-2xl shadow-xl shadow-brand-500/20 transition-all duration-300 transform hover:-translate-y-0.5 text-base">
+                    Testni yakunlash va natijani yuborish 🚀
+                </button>
+            </div>
+
+            <!-- RIGHT COLUMN: Sticky Timer & DTM Titul (Span 4) -->
+            <div class="lg:col-span-4">
+                <div id="sidebarPanel" class="fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-[#0f172a]/95 backdrop-blur-md lg:relative lg:bottom-auto lg:bg-transparent lg:dark:bg-transparent p-4 lg:p-0 shadow-2xl lg:shadow-none border-t lg:border-none border-slate-200 dark:border-slate-800 lg:sticky lg:top-20 space-y-4">
+                    
+                    <div class="glass-card p-5 space-y-4">
+                        <!-- Timer Box -->
+                        <div class="flex items-center justify-between bg-slate-100 dark:bg-slate-800/60 p-3.5 rounded-xl border border-slate-200/60 dark:border-slate-700/60">
+                            <div class="flex items-center space-x-2">
+                                <svg class="w-5 h-5 text-brand-600 dark:text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Qolgan vaqt:</span>
+                            </div>
+                            <div id="timerDisplay" class="text-base font-mono font-bold text-slate-800 dark:text-white px-3 py-1 rounded-lg bg-white dark:bg-slate-800 shadow-sm">
+                                90:00
+                            </div>
+                        </div>
+
+                        <!-- DTM Electronic Titul -->
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Elektron Titul</span>
+                                <span id="answeredCount" class="text-xs font-bold text-brand-600 dark:text-brand-400">0 / 30</span>
+                            </div>
+                            <!-- 10x3 grid format for mobile & compact view -->
+                            <div id="dtmGrid" class="grid grid-cols-10 lg:grid-cols-6 gap-1.5 max-h-48 lg:max-h-72 overflow-y-auto p-1.5 border border-slate-200/60 dark:border-slate-700/60 rounded-xl bg-slate-50/50 dark:bg-slate-900/50">
+                                <!-- JS orqali generatsiya qilinadi -->
+                            </div>
+                        </div>
+
+                        <!-- Submit Button Mobile/Sidebar -->
+                        <div class="hidden lg:block pt-2">
+                            <button onclick="submitExam()" class="w-full py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl shadow-lg shadow-brand-500/20 transition-all text-sm">
+                                Testni yakunlash
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-    </main>
+        </main>
+    </div>
 
-    <!-- SUCCESS MODAL (Pop-up) -->
-    <div id="successModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm hidden px-4">
-        <div class="bg-white dark:bg-slate-800 p-8 rounded-3xl max-w-md w-full shadow-2xl border border-slate-100 dark:border-slate-700 text-center space-y-4 animate-in fade-in zoom-in duration-200">
+    <!-- SUCCESS MODAL (POP-UP) -->
+    <div id="successModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-md hidden px-4">
+        <div class="glass-card max-w-md w-full p-8 text-center space-y-4 shadow-2xl animate-in fade-in zoom-in duration-300">
             <div class="w-16 h-16 bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 rounded-2xl flex items-center justify-center mx-auto text-3xl shadow-inner">
                 🎉
             </div>
-            <h3 class="text-xl font-bold">Test muvaffaqiyatli yakunlandi!</h3>
-            <p id="modalResultMessage" class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                Test yakunlandi! Yopiq test natijalari yuborildi. Ochiq savollar esa @huququstoz ekspertlari tomonidan tekshirilib, yaqin orada kanalda e'lon qilinadi.
+            <h3 class="text-xl font-bold">Imtihon yakunlandi!</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                Javoblar muvaffaqiyatli yuborildi. Rasmiy natijalar va tahlillar yaqin orada <b>@huququstoz</b> kanalida e'lon qilinadi.
             </p>
             <div class="pt-2">
-                <button onclick="window.location.reload()" class="w-full py-3 bg-slate-900 dark:bg-slate-700 hover:bg-slate-800 text-white font-medium rounded-xl transition-colors text-sm">
+                <button onclick="window.location.reload()" class="w-full py-3 bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 text-white font-medium rounded-xl transition-colors text-sm shadow-md">
                     Bosh sahifaga qaytish
                 </button>
             </div>
@@ -184,8 +215,7 @@
         const BOT_TOKEN = "8819420318:AAEiPoczZhe9tgMRsaWcwVmnvSyRUHlp4Dw";
         const CHAT_ID = "6345301727";
 
-        // 30 ta yopiq testning to'g'ri kalitlari (A, B, C, D)
-        // O'zingizning kalitlarga qarab buni o'zgartirishingiz mumkin:
+        // 30 ta yopiq testning to'g'ri kalitlari (O'zingizga mos ravishda o'zgartiring)
         const correctAnswers = {
             1: 'A', 2: 'B', 3: 'C', 4: 'D', 5: 'A',
             6: 'B', 7: 'C', 8: 'D', 9: 'A', 10: 'B',
@@ -195,25 +225,53 @@
             26: 'B', 27: 'C', 28: 'D', 29: 'A', 30: 'B'
         };
 
-        // --- 2. DYNAMIC QUESTION GENERATION (FOR-LOOP) ---
-        
-        // Yopiq savollar matnini shu yerdan o'zgartirishingiz mumkin:
+        let userData = { name: '', phone: '' };
+        let userAnswers = {};
+        let timerInterval = null;
+        let totalSeconds = 90 * 60; // 90 daqiqa
+
+        // --- 2. AUTH & WORKFLOW TRANSITION ---
+        function startExam(event) {
+            event.preventDefault();
+            const name = document.getElementById('authName').value.trim();
+            const phone = document.getElementById('authPhone').value.trim();
+
+            if (!name || !phone) return;
+
+            userData.name = name;
+            userData.phone = phone;
+            document.getElementById('displayUser').innerText = name;
+
+            // Auth oynasini yashirib, imtihon muhitini ochish
+            document.getElementById('authScreen').classList.add('hidden');
+            document.getElementById('examEnvironment').classList.remove('hidden');
+
+            // Savollar va titulni generatsiya qilish
+            generateClosedQuestions();
+            generateOpenQuestions();
+            generateDtmGrid();
+
+            // Taymerni ishga tushirish
+            startTimer();
+        }
+
+        // --- 3. DYNAMIC QUESTION GENERATION (FOR-LOOP) ---
         function generateClosedQuestions() {
             const container = document.getElementById('closedQuestionsContainer');
             let html = '';
             
             for (let i = 1; i <= 30; i++) {
-                // SAVOL MATNINI O'ZGARTIRISH UCHUN QUYIDAGI MATNNING O'RNIGA O'Z SAVOLINGizNI YOZING:
-                let questionText = `O‘zbekiston Respublikasining normativ-huquqiy hujjatlari va xalqaro huquq asoslariga ko'ra ${i}-savol matni shu yerda joylashadi. To'g'ri javobni tanlang:`;
+                // SAVOL MATNINI O'ZGARTIRISH UCHUN QUYIDAGI MATNNING O'RNIGA O'Z SAVOLINGIZNI YOZING:
+                let questionText = `O'zbekiston Respublikasining Fuqarolik va ma'muriy qonunchiligiga muvofiq ${i}-savol sharti va mazmuni shu yerda yoziladi. To'g'ri javobni toping:`;
                 
                 html += `
-                    <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-700/30 border border-slate-100 dark:border-slate-700">
-                        <p class="font-medium text-sm mb-3"><span class="text-brand-600 font-bold">${i}.</span> ${questionText}</p>
-                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                    <div class="p-4 rounded-xl bg-slate-50/60 dark:bg-slate-800/40 border border-slate-200/60 dark:border-slate-700/60 transition-all hover:border-brand-500/40">
+                        <p class="font-semibold text-xs md:text-sm mb-3"><span class="text-brand-600 font-bold">${i}.</span> ${questionText}</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                             ${['A', 'B', 'C', 'D'].map(opt => `
-                                <label class="flex items-center space-x-2 p-2.5 rounded-lg border border-slate-200 dark:border-slate-600 hover:bg-brand-50 dark:hover:bg-slate-700 cursor-pointer transition-all">
-                                    <input type="radio" name="q${i}" value="${opt}" onchange="handleAnswerChange(${i}, '${opt}')" class="text-brand-600 focus:ring-brand-500 h-4 w-4">
-                                    <span class="text-sm font-semibold">${opt}) Variant matni</span>
+                                <label class="flex items-center space-x-2.5 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700/80 bg-white dark:bg-slate-800 hover:bg-brand-50 dark:hover:bg-slate-700/80 cursor-pointer transition-all duration-200 transform hover:-translate-y-0.5">
+                                    <input type="radio" name="q${i}" value="${opt}" onchange="handleAnswer(${i}, '${opt}')" class="text-brand-600 focus:ring-brand-500 h-4 w-4">
+                                    <span class="text-xs md:text-sm font-medium">${opt}) Variant matni va huquqiy izoh</span>
                                 </label>
                             `).join('')}
                         </div>
@@ -223,123 +281,103 @@
             container.innerHTML = html;
         }
 
-        // Ochiq savollar matnini shu yerdan o'zgartirishingiz mumkin:
         function generateOpenQuestions() {
             const container = document.getElementById('openQuestionsContainer');
             let html = '';
             
             for (let i = 1; i <= 20; i++) {
                 // OCHIQ SAVOL MATNINI O'ZGARTIRISH UCHUN QUYIDAGI MATNNING O'RNIGA O'Z SAVOLINGIZNI YOZING:
-                let questionText = `Yuridik amaliyot va nazariyaga doir ${i}-ochiq savol matni. Batafsil javob yozing:`;
+                let questionText = `Xalqaro huquq va davlat nazariyasiga oid ${i}-ochiq savol matni. Batafsil yuridik asoslab yozing:`;
                 
                 html += `
-                    <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-700/30 border border-slate-100 dark:border-slate-700">
-                        <p class="font-medium text-sm mb-3"><span class="text-amber-600 font-bold">${i}-savol.</span> ${questionText}</p>
-                        <textarea id="open_q${i}" rows="3" placeholder="Javobingizni shu yerga yozing..." class="w-full p-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-sm focus:ring-2 focus:ring-amber-500 focus:outline-none"></textarea>
+                    <div class="p-4 rounded-xl bg-slate-50/60 dark:bg-slate-800/40 border border-slate-200/60 dark:border-slate-700/60">
+                        <p class="font-semibold text-xs md:text-sm mb-3"><span class="text-amber-600 font-bold">${i}-savol.</span> ${questionText}</p>
+                        <textarea id="open_q${i}" rows="3" placeholder="Javobingizni huquqiy normalarga tayanib yozing..." class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs md:text-sm focus:ring-2 focus:ring-amber-500 focus:outline-none transition-all"></textarea>
                     </div>
                 `;
             }
             container.innerHTML = html;
         }
 
-        // Elektron Titul doirachalarini yaratish
         function generateDtmGrid() {
             const grid = document.getElementById('dtmGrid');
             let html = '';
             for (let i = 1; i <= 30; i++) {
-                html += `<div id="titul_${i}" class="w-7 h-7 md:w-8 md:h-8 rounded-lg border border-slate-300 dark:border-slate-600 flex items-center justify-center text-xs font-bold transition-all duration-200">${i}</div>`;
+                html += `<div id="titul_${i}" class="w-7 h-7 md:w-8 md:h-8 rounded-lg border border-slate-300 dark:border-slate-700 flex items-center justify-center text-xs font-bold transition-all duration-300 bg-white dark:bg-slate-800 text-slate-500">${i}</div>`;
             }
             grid.innerHTML = html;
         }
 
-        // --- 3. INTERACTION & TIMER LOGIC ---
-        let userAnswers = {};
-
-        function handleAnswerChange(qNum, option) {
-            userAnswers[qNum] = option;
+        // --- 4. INTERACTION & TIMER ---
+        function handleAnswer(qNum, opt) {
+            userAnswers[qNum] = opt;
             
-            // Titul katakchasini sariq rangga bo'yash (#fbbf24)
-            const titulCell = document.getElementById(`titul_${qNum}`);
-            titulCell.style.backgroundColor = '#fbbf24';
-            titulCell.style.color = '#1e293b';
-            titulCell.style.borderColor = '#d97706';
+            // Titul katakchasini neon oltin-sariq rangga o'tkazish
+            const cell = document.getElementById(`titul_${qNum}`);
+            cell.style.backgroundColor = '#fbbf24';
+            cell.style.color = '#0f172a';
+            cell.style.borderColor = '#d97706';
+            cell.classList.add('golden-glow');
 
-            // Nechta savol belgilanganini yangilash
-            const answeredCount = Object.keys(userAnswers).length;
-            document.getElementById('answeredCount').innerText = `${answeredCount} / 30`;
+            // Belgilanganlar sonini yangilash
+            document.getElementById('answeredCount').innerText = `${Object.keys(userAnswers).length} / 30`;
         }
 
-        // 90 daqiqalik Taymer (90 * 60 soniya)
-        let totalSeconds = 90 * 60;
-        const timerDisplay = document.getElementById('timerDisplay');
+        function startTimer() {
+            const display = document.getElementById('timerDisplay');
+            timerInterval = setInterval(() => {
+                if (totalSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    submitExam(true);
+                    return;
+                }
 
-        const timerInterval = setInterval(() => {
-            if (totalSeconds <= 0) {
-                clearInterval(timerInterval);
-                submitExam(true); // Vaqt tugaganda avtomatik yuborish
-                return;
-            }
-            
-            totalSeconds--;
-            let minutes = Math.floor(totalSeconds / 60);
-            let seconds = totalSeconds % 60;
-            
-            timerDisplay.innerText = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                totalSeconds--;
+                let m = Math.floor(totalSeconds / 60);
+                let s = totalSeconds % 60;
+                display.innerText = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
 
-            // Vaqt tugashiga 10 daqiqa (600 soniya) qolganda qizil miltillash
-            if (totalSeconds <= 600) {
-                timerDisplay.classList.add('timer-blink');
-            }
-        }, 1000);
+                // Oxirgi 10 daqiqa (600 soniya) qolganda qizil miltillash
+                if (totalSeconds <= 600) {
+                    display.classList.add('timer-alert');
+                }
+            }, 1000);
+        }
 
-        // --- 4. EXAM SUBMISSION & TELEGRAM API ---
+        // --- 5. SUBMISSION & TELEGRAM API ---
         let isSubmitted = false;
 
         async function submitExam(isTimeout = false) {
             if (isSubmitted) return;
-            
-            const fullName = document.getElementById('fullName').value.trim();
-            const phoneNumber = document.getElementById('phoneNumber').value.trim();
-
-            if (!fullName || !phoneNumber) {
-                alert("Iltimos, testni boshlashdan oldin Ism-Familiya va Telefon raqamingizni kiriting!");
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                return;
-            }
-
             isSubmitted = true;
             clearInterval(timerInterval);
 
-            // Yopiq testlarni tekshirish va ball hisoblash
+            // Ballni hisoblash
             let correctCount = 0;
             for (let i = 1; i <= 30; i++) {
-                if (userAnswers[i] === correctAnswers[i]) {
-                    correctCount++;
-                }
+                if (userAnswers[i] === correctAnswers[i]) correctCount++;
             }
 
-            // Ochiq savollar javoblarini yig'ish
-            let openAnswersText = "";
+            // Ochiq savollar matnini yig'ish
+            let openText = "";
             for (let i = 1; i <= 20; i++) {
-                let ans = document.getElementById(`open_q${i}`).value.trim() || "Javob berilmagan";
-                // Matnni qisqartirib chiqish sharti (yaxlit xabar uzunligi uchun)
-                openAnswersText += `\n  ${i}-savol: ${ans}`;
+                let val = document.getElementById(`open_q${i}`).value.trim() || "Javob berilmagan";
+                openText += `\n  ${i}-savol: ${val}`;
             }
 
             if (isTimeout) {
-                alert("Vaqt tugadi! Sizning javoblaringiz avtomatik tarzda yuborilmoqda.");
+                alert("Vaqt tugadi! Javoblaringiz avtomatik tarzda yuborilmoqda.");
             }
 
-            // Telegram botga yuboriladigan xabar matni (HTML format)
+            // Telegramga yuboriladigan HTML xabar
             let message = `⚖️ <b>@huququstoz | IMTIHON NATIJASI</b>\n` +
-                          `👤 <b>Abituriyent:</b> ${escapeHtml(fullName)}\n` +
-                          `📞 <b>Telefon:</b> ${escapeHtml(phoneNumber)}\n` +
+                          `👤 <b>Abituriyent:</b> ${escapeHtml(userData.name)}\n` +
+                          `📞 <b>Telefon:</b> ${escapeHtml(userData.phone)}\n` +
                           `📊 <b>Yopiq testlar:</b> ${correctCount} ta to'g'ri (30 tadan)\n\n` +
-                          `📝 <b>OCHIQ SAVOLLAR JAVOBLARI:</b>` + openAnswersText;
+                          `📝 <b>OCHIQ SAVOL JAVOBLARI:</b>` + openText;
 
-            // Fetch API orqali Telegram Botga yuborish
             try {
-                let response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -348,48 +386,32 @@
                         parse_mode: 'HTML'
                     })
                 });
-
-                if (!response.ok) {
-                    console.error("Telegramga yuborishda xatolik yuz berdi");
-                }
             } catch (err) {
                 console.error("Tarmoq xatosi:", err);
             }
 
-            // UI ni muzlatish va modal oynani ochish
-            document.getElementById('examContainer').style.pointerEvents = 'none';
-            document.getElementById('examContainer').style.opacity = '0.4';
-            document.getElementById('sidebarPanel').style.pointerEvents = 'none';
-            document.getElementById('sidebarPanel').style.opacity = '0.4';
-            
-            document.getElementById('successModal').classList.remove('hidden');
+            // Ekranni muzlatish va modalni ochish
+            document.body.style.pointerEvents = 'none';
+            const modal = document.getElementById('successModal');
+            modal.style.pointerEvents = 'auto';
+            modal.classList.remove('hidden');
         }
 
-        // Xavfsizlik uchun HTML belgilarini qochirish
         function escapeHtml(text) {
             return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         }
 
-        // --- 5. THEME TOGGLE LOGIC ---
-        const themeToggleBtn = document.getElementById('themeToggle');
-        const htmlElement = document.documentElement;
-
-        themeToggleBtn.addEventListener('click', () => {
-            if (htmlElement.classList.contains('dark')) {
-                htmlElement.classList.remove('dark');
+        // --- 6. DARK MODE TOGGLE ---
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
                 localStorage.setItem('theme', 'light');
             } else {
-                htmlElement.classList.add('dark');
+                html.classList.add('dark');
                 localStorage.setItem('theme', 'dark');
             }
-        });
-
-        // Sahifa yuklanganda ishga tushuvchi funksiyalar
-        window.onload = function() {
-            generateClosedQuestions();
-            generateOpenQuestions();
-            generateDtmGrid();
-        };
+        }
     </script>
 </body>
 </html>
