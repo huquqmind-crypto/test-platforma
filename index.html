@@ -126,7 +126,7 @@
                 <!-- Closed Tests Section -->
                 <div class="glass-card p-6 space-y-6">
                     <div class="border-b border-slate-200 dark:border-slate-800 pb-3 flex justify-between items-center">
-                        <h2 class="font-bold text-base text-brand-600 dark:text-brand-400">I-BO‘LIM: Yopiq testlar (30 ta)</h2>
+                        <h2 class="font-bold text-base text-brand-600 dark:text-brand-400">I-BO‘LIM: Yopiq testlar (35 ta)</h2>
                         <span class="text-xs bg-brand-50 dark:bg-slate-800 text-brand-600 dark:text-brand-300 px-3 py-1 rounded-full font-semibold">DTM Standarti</span>
                     </div>
                     <div id="closedQuestionsContainer" class="space-y-6"></div>
@@ -135,8 +135,8 @@
                 <!-- Open Questions Section -->
                 <div class="glass-card p-6 space-y-6">
                     <div class="border-b border-slate-200 dark:border-slate-800 pb-3 flex justify-between items-center">
-                        <h2 class="font-bold text-base text-brand-600 dark:text-brand-400">II-BO‘LIM: Ochiq savollar (20 ta)</h2>
-                        <span class="text-xs bg-amber-50 dark:bg-slate-800 text-amber-600 dark:text-amber-300 px-3 py-1 rounded-full font-semibold">Maksimal 300 belgi</span>
+                        <h2 class="font-bold text-base text-brand-600 dark:text-brand-400">II-BO‘LIM: Ochiq savollar (10 ta)</h2>
+                        <span class="text-xs bg-amber-50 dark:bg-slate-800 text-amber-600 dark:text-amber-300 px-3 py-1 rounded-full font-semibold">Maksimal 500 belgi</span>
                     </div>
                     <div id="openQuestionsContainer" class="space-y-6"></div>
                 </div>
@@ -151,10 +151,10 @@
             <div class="hidden lg:block lg:col-span-4">
                 <div class="glass-card p-5 space-y-4 sticky top-20">
                     <div class="flex justify-between items-center mb-2">
-                        <span class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Elektron Titul</span>
-                        <span id="answeredCountDesktop" class="text-xs font-bold text-brand-600 dark:text-brand-400">0 / 30</span>
+                        <span class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Elektron Titul (1-35)</span>
+                        <span id="answeredCountDesktop" class="text-xs font-bold text-brand-600 dark:text-brand-400">0 / 35</span>
                     </div>
-                    <div id="dtmGridDesktop" class="grid grid-cols-6 gap-1.5 max-h-72 overflow-y-auto p-1.5 border border-slate-200 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-900"></div>
+                    <div id="dtmGridDesktop" class="grid grid-cols-5 gap-1.5 max-h-72 overflow-y-auto p-1.5 border border-slate-200 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-900"></div>
                     <div class="pt-2">
                         <button onclick="submitExam()" class="w-full py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl shadow-lg transition-all text-sm">
                             Testni yakunlash
@@ -170,7 +170,7 @@
     <div class="lg:hidden fixed bottom-4 right-4 z-40">
         <button onclick="toggleMobileDrawer(true)" class="flex items-center space-x-2 bg-brand-600 hover:bg-brand-700 text-white px-4 py-3 rounded-2xl shadow-xl font-bold text-xs">
             <span>📊 Titul & Javoblar</span>
-            <span id="answeredCountMobile" class="bg-white text-brand-600 px-2 py-0.5 rounded-lg text-xs">0/30</span>
+            <span id="answeredCountMobile" class="bg-white text-brand-600 px-2 py-0.5 rounded-lg text-xs">0/35</span>
         </button>
     </div>
 
@@ -178,10 +178,10 @@
     <div id="mobileDrawer" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-end">
         <div class="glass-card w-full p-6 rounded-t-3xl max-h-[80vh] overflow-y-auto space-y-4">
             <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-700 pb-3">
-                <h3 class="font-bold text-sm">Elektron Titul (1-30 doirachalar)</h3>
+                <h3 class="font-bold text-sm">Elektron Titul (1-35 doirachalar)</h3>
                 <button onclick="toggleMobileDrawer(false)" class="p-1 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-xs px-3 py-1">Yopish ✕</button>
             </div>
-            <div id="dtmGridMobile" class="grid grid-cols-10 gap-2 p-2 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700"></div>
+            <div id="dtmGridMobile" class="grid grid-cols-7 gap-2 p-2 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700"></div>
             <button onclick="toggleMobileDrawer(false); submitExam();" class="w-full py-3 bg-brand-600 text-white font-bold rounded-xl text-sm shadow-md">
                 Testni yakunlash va yuborish 🚀
             </button>
@@ -211,13 +211,15 @@
         const BOT_TOKEN = "8819420318:AAEiPoczZhe9tgMRsaWcwVmnvSyRUHlp4Dw";
         const CHAT_ID = "6345301727";
 
+        // 35 ta yopiq savol uchun namunaviy javoblar
         const correctAnswers = {
             1: 'A', 2: 'B', 3: 'C', 4: 'D', 5: 'A',
             6: 'B', 7: 'C', 8: 'D', 9: 'A', 10: 'B',
             11: 'C', 12: 'D', 13: 'A', 14: 'B', 15: 'C',
             16: 'D', 17: 'A', 18: 'B', 19: 'C', 20: 'D',
             21: 'A', 22: 'B', 23: 'C', 24: 'D', 25: 'A',
-            26: 'B', 27: 'C', 28: 'D', 29: 'A', 30: 'B'
+            26: 'B', 27: 'C', 28: 'D', 29: 'A', 30: 'B',
+            31: 'C', 32: 'D', 33: 'A', 34: 'B', 35: 'C'
         };
 
         let userData = { name: '', phone: '' };
@@ -249,7 +251,7 @@
         function generateClosedQuestions() {
             const container = document.getElementById('closedQuestionsContainer');
             let html = '';
-            for (let i = 1; i <= 30; i++) {
+            for (let i = 1; i <= 35; i++) {
                 let questionText = `O'zbekiston Respublikasining qonunchiligi va huquqiy normalariga muvofiq ${i}-savol sharti shu yerda yoziladi. To'g'ri javobni tanlang:`;
                 html += `
                     <div class="p-4 rounded-xl bg-slate-50/50 dark:bg-slate-800/40 border border-slate-200/60 dark:border-slate-700/60">
@@ -271,15 +273,15 @@
         function generateOpenQuestions() {
             const container = document.getElementById('openQuestionsContainer');
             let html = '';
-            for (let i = 1; i <= 20; i++) {
+            for (let i = 1; i <= 10; i++) {
                 let questionText = `Xalqaro huquq va davlat nazariyasiga oid ${i}-ochiq savol matni. Batafsil yuridik asoslab yozing:`;
                 html += `
                     <div class="p-4 rounded-xl bg-slate-50/50 dark:bg-slate-800/40 border border-slate-200/60 dark:border-slate-700/60">
                         <div class="flex justify-between items-center mb-2">
                             <p class="font-semibold text-xs md:text-sm"><span class="text-amber-600 font-bold">${i}-savol.</span> ${questionText}</p>
-                            <span id="counter_open_q${i}" class="text-[10px] text-slate-400">0/300</span>
+                            <span id="counter_open_q${i}" class="text-[10px] text-slate-400">0/500</span>
                         </div>
-                        <textarea id="open_q${i}" rows="3" maxlength="300" oninput="updateCharCount(${i})" placeholder="Javobingizni yozing (maksimal 300 belgi)..." class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs md:text-sm focus:ring-2 focus:ring-amber-500 focus:outline-none"></textarea>
+                        <textarea id="open_q${i}" rows="4" maxlength="500" oninput="updateCharCount(${i})" placeholder="Javobingizni batafsil yozing (maksimal 500 belgi)..." class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs md:text-sm focus:ring-2 focus:ring-amber-500 focus:outline-none"></textarea>
                     </div>
                 `;
             }
@@ -287,10 +289,18 @@
         }
 
         function updateCharCount(i) {
-            const val = document.getElementById(`open_q${i}`).value;
+            const textarea = document.getElementById(`open_q${i}`);
             const counter = document.getElementById(`counter_open_q${i}`);
-            counter.innerText = `${val.length}/300`;
-            if (val.length >= 280) {
+            
+            // 500 tadan oshib ketsa qirqib tashlash
+            if (textarea.value.length > 500) {
+                textarea.value = textarea.value.substring(0, 500);
+            }
+
+            const len = textarea.value.length;
+            counter.innerText = `${len}/500`;
+            
+            if (len >= 470) {
                 counter.classList.add('text-red-500', 'font-bold');
             } else {
                 counter.classList.remove('text-red-500', 'font-bold');
@@ -300,7 +310,7 @@
         function generateDtmGrids() {
             let htmlDesktop = '';
             let htmlMobile = '';
-            for (let i = 1; i <= 30; i++) {
+            for (let i = 1; i <= 35; i++) {
                 let item = `<div id="titul_${i}" class="w-7 h-7 md:w-8 md:h-8 rounded-lg border border-slate-300 dark:border-slate-700 flex items-center justify-center text-xs font-bold bg-white dark:bg-slate-800 text-slate-500">${i}</div>`;
                 htmlDesktop += item;
                 htmlMobile += item;
@@ -320,8 +330,8 @@
             }
 
             const count = Object.keys(userAnswers).length;
-            document.getElementById('answeredCountDesktop').innerText = `${count} / 30`;
-            document.getElementById('answeredCountMobile').innerText = `${count}/30`;
+            document.getElementById('answeredCountDesktop').innerText = `${count} / 35`;
+            document.getElementById('answeredCountMobile').innerText = `${count}/35`;
         }
 
         function toggleMobileDrawer(show) {
@@ -353,12 +363,12 @@
             clearInterval(timerInterval);
 
             let correctCount = 0;
-            for (let i = 1; i <= 30; i++) {
+            for (let i = 1; i <= 35; i++) {
                 if (userAnswers[i] === correctAnswers[i]) correctCount++;
             }
 
             let openAnswersList = [];
-            for (let i = 1; i <= 20; i++) {
+            for (let i = 1; i <= 10; i++) {
                 let val = document.getElementById(`open_q${i}`).value.trim() || "Javob berilmagan";
                 openAnswersList.push(`• ${i}-savol: ${val}`);
             }
@@ -368,8 +378,8 @@
             let baseHeader = `⚖️ <b>@huququstoz | IMTIHON NATIJASI</b>\n` +
                              `👤 <b>Abituriyent:</b> ${escapeHtml(userData.name)}\n` +
                              `📞 <b>Telefon:</b> ${escapeHtml(userData.phone)}\n` +
-                             `📊 <b>Yopiq testlar:</b> ${correctCount} ta to'g'ri (30 tadan)\n\n` +
-                             `📝 <b>OCHIQ SAVOL JAVOBLARI:</b>\n`;
+                             `📊 <b>Yopiq testlar:</b> ${correctCount} ta to'g'ri (35 tadan)\n\n` +
+                             `📝 <b>OCHIQ SAVOL JAVOBLARI (10 ta):</b>\n`;
 
             let messagesToSend = [];
             let currentMsg = baseHeader;
